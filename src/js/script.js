@@ -95,10 +95,14 @@
 
         /* find active product (product that has active class) */
         const activeProduct = thisProduct.element.querySelector('.active');
+
+        const activeImages = thisProduct.element.querySelectorAll('.product__images .active');
+        console.log('activeImages', activeImages);
+
         console.log('activeProduct', activeProduct);
 
         /* if there is active product and it's not thisProduct.element, remove class active from it */
-        if (activeProduct != thisProduct.element){
+        if ((activeProduct) && activeProduct != thisProduct.element){
           activeProduct.classList.remove(classNames.menuProduct.wrapperActive);
         }
         
