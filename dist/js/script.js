@@ -162,11 +162,11 @@
           const option = param.options[optionId];
           console.log(optionId, option);
           if(formData[paramId] && formData[paramId].includes(optionId)){
-            if(/*jeśli opcja nie ma klucza default*/){
+            if(!(option.default)){
               price += option.price;
             }
           } else {
-            if(option.default = true){
+            if(option.default){
               price -= option.price;
             }
           }
