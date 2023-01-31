@@ -150,7 +150,6 @@
       
       // covert form to object structure e.g. { sauce: ['tomato'], toppings: ['olives', 'redPeppers']}
       const formData = utils.serializeFormToObject(thisProduct.form);
-      console.log('formData', formData);
       
       // set price to default price
       let price = thisProduct.data.price;
@@ -197,11 +196,12 @@
   class AmountWidget{
     constructor(element){
       const thisWidget = this;
-
       console.log('AmountWidget:', thisWidget);
       console.log('constructor arguments:', element);
 
+      thisWidget.initActions();
       thisWidget.getElements(element);
+      thisWidget.setValue(thisWidget.input.value);
     }
     
     getElements(element){
@@ -209,8 +209,38 @@
     
       thisWidget.element = element;
       thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
+      console.log(thisWidget.input);
       thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
       thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
+    }
+
+    setValue(value){
+      const thisWidget = this;
+
+      const newValue = parseInt(value);
+      if(newValue !== thisWidget.value && !isNaN(newValue)){
+        thisWidget.value = newValue;
+      }
+      
+      thisWidget.input.value = thisWidget.value;
+    }
+
+    initActions(){
+      const thisWidget = this;
+
+      thisWidget.input.addEventListener('change', function(){
+        thisWidget.setValue(thisWidget.input.value);
+      });
+
+      thisWidget.linkDecrease.addEventListener('click', function(event){
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.input - 1);
+      });
+
+      thisWidget.linkIncrease.addEventListener('click', function(event){
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.input + 1);
+      });
     }
   }
 
