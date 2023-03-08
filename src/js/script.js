@@ -223,6 +223,8 @@
       /*console.log('TEST', thisProduct.amountWidget.value)*/
       price *= thisProduct.amountWidget.value;
 
+      const priceSingle = price;
+
       // update calculated price in the HTML
       thisProduct.priceElem.innerHTML = price;
     }
@@ -240,7 +242,7 @@
     addToCart(){
       const thisProduct = this;
 
-      app.cart.add(thisProduct);
+      app.cart.add(thisProduct.prepareCartProduct);
     }
 
     prepareCartProduct(){
@@ -251,6 +253,12 @@
       productSummary.id = thisProduct.id;
       productSummary.name = thisProduct.name;
       productSummary.amount = thisProduct.amount;
+      productSummary.priceSingle = thisProduct.priceSingle;
+      //productSummary.price = thisProduct
+
+      productSummary.params = {};
+
+      return
     }
   }
 
