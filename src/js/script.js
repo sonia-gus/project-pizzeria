@@ -292,7 +292,7 @@
 
 
 
-  class AmountWidget{
+  class AmountWidget {
     constructor(element){
       const thisWidget = this;
       console.log('AmountWidget:', thisWidget);
@@ -346,7 +346,9 @@
     announce(){
       const thisWidget = this;
 
-      const event = new Event('updated');
+      const event = new CustomEvent('updated', {
+        bubbles: true
+      });
       thisWidget.element.dispatchEvent(event);
     }
   }
@@ -398,6 +400,13 @@
 
       thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
     }
+
+    update(){
+      const thisCart = this;
+
+      const deliveryFee = thisCart.querySelector(settings.cart.defaultDeliveryFee);
+
+    }
   }
 
   class CartProduct {
@@ -408,6 +417,7 @@
       thisCartProduct.price = menuProduct.price;
 
       thisCartProduct.getElements(element);
+      thisCartProduct.initAmountWidget();
 
       console.log(thisCartProduct);
     }
@@ -422,6 +432,14 @@
       thisCartProduct.dom.price = element.querySelector(select.cartProduct.price);
       thisCartProduct.dom.edit = element.querySelector(select.cartProduct.edit);
       thisCartProduct.dom.remove = element.querySelector(select.cartProduct.remove);
+    }
+
+    initAmountWidget(){
+      const thisCartProduct = this;
+
+      thisCartProduct.amountWidget.addEventListener('updated', function(){
+        thisCartProduct.processOrder();
+      });
     }
 
   }
